@@ -6,20 +6,21 @@ import idGen from './helpers/idGen'
 const Header = (props) => <h1>{props.title}</h1>
 
 //TODO:
-//  - validar el formulario
-//  - persistir los datos
-//  - crear desde modal
-//  - editar estudiante
-//  - eliminnar
+//  - validar el formulario 1
+//  - acciones sobre el studiantes (editar, ver, eliminar)
+//  - persistir los datos   0
+//  - crear desde modal     0
+//  - editar estudiante     0
+//  - eliminnar (fun())     0
 
 class App extends React.Component {
 	state = {
 		studentModel: {
-			firstName: '',
-			lastName: '',
-			age: '',
-			comission: '',
-			email: '',
+			firstName: '', // requerido - min 3
+			lastName: '', // requerido - min 8 - max 20
+			age: '', // requerido - min 2 - > 18 & < 72
+			comission: '', // opcional
+			email: '', // email valido
 			id: ''
 		},
 		studentsList: []
