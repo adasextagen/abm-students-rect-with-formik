@@ -1,5 +1,10 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+
+const studentValidationSchema = Yup.object().shape({
+	firstName: Yup.string().required()
+})
 
 const StudentForm = (props) => {
 	let { data, submit } = props
@@ -7,18 +12,19 @@ const StudentForm = (props) => {
 		<Formik
 			initialValues={data}
 			onSubmit={submit}
-			validate={(values) => {
-				let errors = {}
-				if (!values.firstName) {
-					errors.firstName = 'debe ingresar el nombre'
-				}
-				if (!values.age) {
-					errors.age = 'debe ingresar la edad'
-				} else if (values.age < 18) errors.age = 'debe ser mayor de edad'
+			validationSchema={studentValidationSchema}
+			// validate={(values) => {
+			// 	let errors = {}
+			// 	if (!values.firstName) {
+			// 		errors.firstName = 'debe ingresar el nombre'
+			// 	}
+			// 	if (!values.age) {
+			// 		errors.age = 'debe ingresar la edad'
+			// 	} else if (values.age < 18) errors.age = 'debe ser mayor de edad'
 
-				console.log(errors)
-				return errors
-			}}
+			// 	console.log(errors)
+			// 	return errors
+			// }}
 		>
 			{(props) => {
 				//let { errors, touched } = props
