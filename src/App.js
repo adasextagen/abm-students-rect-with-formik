@@ -14,6 +14,7 @@ import './App.scss'
 //  - crear desde modal     0
 //  - editar estudiante     0
 //  - eliminnar (fun())     0
+//  - editar la funcion add student
 
 class App extends React.Component {
 	state = {
@@ -25,7 +26,17 @@ class App extends React.Component {
 			email: '', // email valido
 			id: ''
 		},
-		studentsList: [],
+		currentStudent: '',
+		studentsList: [
+			{
+				firstName: 'Pepa',
+				lastName: 'Perez',
+				age: '32',
+				comission: 'sexta',
+				email: 'pepa@perez.com',
+				id: 'stu-09800918505580112'
+			}
+		],
 		isModalOpen: false
 	}
 
@@ -34,9 +45,14 @@ class App extends React.Component {
 	}
 
 	addStudent = (values) => {
-		let newStudentsList = [ ...this.state.studentsList, { ...values, id: idGen('stu') } ]
-		this.setState({ studentsList: newStudentsList })
-		this.toggleModal()
+		console.log(values)
+		// let newStudentsList = [ ...this.state.studentsList, { ...values, id: idGen('stu') } ]
+		// this.setState({ studentsList: newStudentsList })
+		// this.toggleModal()
+	}
+
+	editStudent = (id) => {
+		this.setState({ currentStudent: id, isModalOpen: true })
 	}
 
 	toggleModal = (e) => {
@@ -45,12 +61,14 @@ class App extends React.Component {
 	}
 
 	render() {
+		let { currentStudent, studentsList, isModalOpen, studentModel } = this.state
+		let modelData = currentStudent ? studentsList.find((e) => e.id === currentStudent) : studentModel
 		return (
 			<Fragment>
 				<Header title={'Abm estudiantes'} addStudent={this.openStudentModal} />
-				<StudentsList data={this.state.studentsList} />
-				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} title={'ola ke ase'}>
-					<StudentForm data={this.state.studentModel} submit={this.addStudent} />{' '}
+				<StudentsList data={studentsList} editStudent={this.editStudent} />
+				<Modal isOpen={isModalOpen} toggle={this.toggleModal} title={'ola ke ase'}>
+					<StudentForm data={modelData} submit={this.addStudent} />
 				</Modal>
 			</Fragment>
 		)

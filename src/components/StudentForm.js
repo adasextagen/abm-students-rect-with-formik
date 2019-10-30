@@ -6,13 +6,13 @@ const studentValidationSchema = Yup.object().shape({
 	firstName: Yup.string().required()
 })
 
-const StudentForm = (props) => {
-	let { data, submit } = props
+const StudentForm = ({ data, submit }) => {
 	return (
 		<Formik
 			initialValues={data}
 			onSubmit={submit}
 			validationSchema={studentValidationSchema}
+			enableReinitialize // permite que los valores iniciales del formulario cambien dinamicamente
 			// validate={(values) => {
 			// 	let errors = {}
 			// 	if (!values.firstName) {

@@ -1,7 +1,6 @@
 import React from 'react'
 
-const StudentsList = (props) => {
-	let { data } = props
+const StudentsList = ({ data, editStudent }) => {
 	return (
 		<table>
 			<thead>
@@ -9,6 +8,7 @@ const StudentsList = (props) => {
 					<td>nombre</td>
 					<td>apellido</td>
 					<td>comisión</td>
+					<td>Acciones</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -18,6 +18,11 @@ const StudentsList = (props) => {
 							<td>{student.firstName}</td>
 							<td>{student.lastName}</td>
 							<td>{student.comission}</td>
+							<td>
+								<button type={'button'} onClick={() => editStudent(student.id)}>
+									editar
+								</button>
+							</td>
 						</tr>
 					))}
 			</tbody>
