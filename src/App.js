@@ -9,12 +9,12 @@ import './App.scss'
 
 //TODO:
 //  - validar el formulario +
-//  - acciones sobre el studiantes (editar, ver, eliminar)
-//  - persistir los datos   0
-//  - crear desde modal     0
-//  - editar estudiante     0
-//  - eliminnar (fun())     0
-//  - editar la funcion add student
+//  - acciones sobre el studiantes (editar, ver, eliminar) +
+//  - persistir los datos   +
+//  - crear desde modal     +
+//  - editar estudiante     +
+//  - eliminnar (fun())     +
+//  - editar la funcion add student +
 
 class App extends React.Component {
 	state = {
