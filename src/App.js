@@ -27,32 +27,32 @@ class App extends React.Component {
 			id: ''
 		},
 		currentStudent: '',
-		studentsList: [
-			{
-				firstName: 'Pepa',
-				lastName: 'Perez',
-				age: '32',
-				comission: 'sexta',
-				email: 'pepa@perez.com',
-				id: 'stu-09800918505580112'
-			}
-		],
+		studentsList: [],
 		isModalOpen: false
 	}
 
-	openStudentModal = () => {
-		this.toggleModal()
+	newStudentModal = () => {
+		this.setState({ currentStudent: '', isModalOpen: true })
 	}
 
-	addStudent = (values) => {
-		console.log(values)
-		// let newStudentsList = [ ...this.state.studentsList, { ...values, id: idGen('stu') } ]
-		// this.setState({ studentsList: newStudentsList })
-		// this.toggleModal()
+	saveStudent = (values) => {
+		let newList = [ ...this.state.studentsList ]
+		if (values.id) {
+			newList[newList.indexOf(newList.find((e) => e.id === values.id))] = { ...values }
+		} else {
+			newList.push({ ...values, id: idGen('stu') })
+		}
+		this.setState({ studentsList: newList, isModalOpen: false })
 	}
 
 	editStudent = (id) => {
 		this.setState({ currentStudent: id, isModalOpen: true })
+	}
+
+	deleteStudent = (id) => {
+		let newList = [ ...this.state.studentsList ]
+		newList.splice(newList.indexOf(newList.find((e) => e.id === id)), 1)
+		this.setState({ studentsList: newList })
 	}
 
 	toggleModal = (e) => {
@@ -60,15 +60,26 @@ class App extends React.Component {
 		this.setState({ isModalOpen: !this.state.isModalOpen })
 	}
 
+	componentDidMount = () => {
+		const persistedState = window.localStorage.getItem('abm-state')
+		this.setState({ ...(JSON.parse(persistedState) || { studentsList: [] }) })
+	}
+
+	componentDidUpdate = () => {
+		let { studentsList } = this.state
+		let persisted = { studentsList }
+		window.localStorage.setItem('abm-state', JSON.stringify(persisted))
+	}
+
 	render() {
 		let { currentStudent, studentsList, isModalOpen, studentModel } = this.state
 		let modelData = currentStudent ? studentsList.find((e) => e.id === currentStudent) : studentModel
 		return (
 			<Fragment>
-				<Header title={'Abm estudiantes'} addStudent={this.openStudentModal} />
-				<StudentsList data={studentsList} editStudent={this.editStudent} />
-				<Modal isOpen={isModalOpen} toggle={this.toggleModal} title={'ola ke ase'}>
-					<StudentForm data={modelData} submit={this.addStudent} />
+				<Header title={'Abm estudiantes'} newStudentModal={this.newStudentModal} />
+				<StudentsList data={studentsList} editStudent={this.editStudent} deleteStudent={this.deleteStudent} />
+				<Modal isOpen={isModalOpen} toggle={this.toggleModal} title={currentStudent ? 'Editar' : 'Añadir'}>
+					<StudentForm data={modelData} submit={this.saveStudent} />
 				</Modal>
 			</Fragment>
 		)

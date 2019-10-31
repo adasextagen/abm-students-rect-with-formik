@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Header = ({ title, addStudent }) => (
+const Header = ({ title, newStudentModal }) => (
 	<div>
 		<h1>{title}</h1>
-		<button type={'button'} onClick={(e) => addStudent(e)}>
-			+
+		<button type={'button'} onClick={(e) => newStudentModal(e)}>
+			añadir +
 		</button>
 	</div>
 )
